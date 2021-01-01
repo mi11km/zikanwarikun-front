@@ -1,13 +1,13 @@
-import Document, {Head, Html, Main, NextScript} from 'next/document';
+import Document, { Head, Html, Main, NextScript } from 'next/document';
 
 class MyDocument extends Document {
     render(): JSX.Element {
         return (
             <Html lang="ja">
-                <Head/>
+                <Head />
                 <body>
-                    <Main/>
-                    <NextScript/>
+                    <Main />
+                    <NextScript />
                 </body>
             </Html>
         );
