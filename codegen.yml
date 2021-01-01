@@ -1,10 +1,10 @@
 overwrite: true
-schema: ./src/graphql/schema.graphql
+schema: "src/graphql/schema.graphql"
 documents:
-  - ./src/graphql/queries/*.graphql
-  - ./src/graphql/mutations/*.graphql
+  - "src/graphql/queries/*.graphql"
+  - "src/graphql/mutations/*.graphql"
 generates:
-  ./src/graphql/__generated__/graphql.tsx:
+  src/graphql/__generated__/generated.tsx:
     plugins:
       - typescript
       - typescript-operations
