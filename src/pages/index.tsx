@@ -1,48 +1,33 @@
-import { gql, useMutation } from '@apollo/client';
 import Head from 'next/head';
 import React from 'react';
 
-const SIGNUP = gql`
-    mutation signup($email: String!, $password: String!, $name: String!, $school: String!) {
-        signup(input: { email: $email, password: $password, name: $name, school: $school }) {
-            user {
-                id
-                email
-                name
-                school
-                timetables {
-                    id
-                }
-            }
-            token
-        }
-    }
-`;
+import { useSignupMutation } from '../graphql/__generated__/graphql';
 
 const Home: React.FC = () => {
     let email: HTMLInputElement,
         password: HTMLInputElement,
         school: HTMLInputElement,
         name: HTMLInputElement;
-
-    const [signup, { loading, error }] = useMutation(SIGNUP);
+    const [signupMutation, { loading, error }] = useSignupMutation();
 
     const handleSignup = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        signup({
+        signupMutation({
             variables: {
-                email: email.value,
-                password: password.value,
-                name: name.value,
-                school: school.value
+                input: {
+                    email: email.value,
+                    password: password.value,
+                    name: name.value,
+                    school: school.value
+                }
             }
         }).then((r) => {
             console.log(r);
         });
     };
 
-    if (loading) return <h1>Loading now!</h1>;
     if (error) return <h1>An error occurred!</h1>;
+    if (loading) return <h1>Loading now!</h1>;
 
     return (
         <div>
