@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import React from 'react';
 
-import { useSignupMutation } from '../graphql/__generated__/graphql';
+import { useSignupMutation } from '../graphql/__generated__/generated';
 
 const Home: React.FC = () => {
     let email: HTMLInputElement,
