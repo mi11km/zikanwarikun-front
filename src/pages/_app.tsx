@@ -1,7 +1,10 @@
 import '../styles/globals.css';
 
+import { ApolloProvider } from '@apollo/client';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
+
+import client from '../apollo/client';
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
     return (
@@ -12,7 +15,9 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
                     content="minimum-scale=1, initial-scale=1, width=device-width"
                 />
             </Head>
-            <Component {...pageProps} />
+            <ApolloProvider client={client}>
+                <Component {...pageProps} />
+            </ApolloProvider>
         </>
     );
 }

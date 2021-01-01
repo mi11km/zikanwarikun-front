@@ -1,60 +1,97 @@
+import { gql, useMutation } from '@apollo/client';
 import Head from 'next/head';
 import React from 'react';
 
-import styles from '../styles/Home.module.css';
+const SIGNUP = gql`
+    mutation signup($email: String!, $password: String!, $name: String!, $school: String!) {
+        signup(input: { email: $email, password: $password, name: $name, school: $school }) {
+            user {
+                id
+                email
+                name
+                school
+                timetables {
+                    id
+                }
+            }
+            token
+        }
+    }
+`;
 
 const Home: React.FC = () => {
+    let email: HTMLInputElement,
+        password: HTMLInputElement,
+        school: HTMLInputElement,
+        name: HTMLInputElement;
+
+    const [signup, { loading, error }] = useMutation(SIGNUP);
+
+    const handleSignup = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        signup({
+            variables: {
+                email: email.value,
+                password: password.value,
+                name: name.value,
+                school: school.value
+            }
+        }).then((r) => {
+            console.log(r);
+        });
+    };
+
+    if (loading) return <h1>Loading now!</h1>;
+    if (error) return <h1>An error occurred!</h1>;
+
     return (
-        <div className={styles.container}>
+        <div>
             <Head>
-                <title>Create Next App</title>
+                <title>時間割くん | zoomが自動で開く時間割サービス</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <main className={styles.main}>
-                <h1 className={styles.title}>
-                    Welcome to <a href="https://nextjs.org">Next.js!</a>
-                </h1>
+            <form onSubmit={handleSignup}>
+                <input
+                    type="email"
+                    ref={(node: HTMLInputElement) => {
+                        email = node;
+                    }}
+                />
+                <br />
+                <input
+                    type="password"
+                    ref={(node: HTMLInputElement) => {
+                        password = node;
+                    }}
+                />
+                <br />
+                <input
+                    type="text"
+                    ref={(node: HTMLInputElement) => {
+                        name = node;
+                    }}
+                />
+                <br />
+                <input
+                    type="text"
+                    ref={(node: HTMLInputElement) => {
+                        school = node;
+                    }}
+                />
+                <br />
+                <button type="submit">登録する</button>
+            </form>
 
-                <p className={styles.description}>
-                    Get started by editing <code className={styles.code}>pages/index.js</code>
-                </p>
+            <style jsx>{`
+                form {
+                    text-align: center;
+                }
 
-                <div className={styles.grid}>
-                    <a href="https://nextjs.org/docs" className={styles.card}>
-                        <h3>Documentation &rarr;</h3>
-                        <p>Find in-depth information about Next.js features and API.</p>
-                    </a>
-
-                    <a href="https://nextjs.org/learn" className={styles.card}>
-                        <h3>Learn &rarr;</h3>
-                        <p>Learn about Next.js in an interactive course with quizzes!</p>
-                    </a>
-
-                    <a
-                        href="https://github.com/vercel/next.js/tree/master/examples"
-                        className={styles.card}>
-                        <h3>Examples &rarr;</h3>
-                        <p>Discover and deploy boilerplate example Next.js projects.</p>
-                    </a>
-
-                    <a
-                        href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-                        className={styles.card}>
-                        <h3>Deploy &rarr;</h3>
-                        <p>Instantly deploy your Next.js site to a public URL with Vercel.</p>
-                    </a>
-                </div>
-            </main>
-
-            <footer className={styles.footer}>
-                <a
-                    href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-                    target="_blank"
-                    rel="noopener noreferrer">
-                    Powered by <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-                </a>
-            </footer>
+                form input {
+                    margin-bottom: 16px;
+                }
+            `}</style>
         </div>
     );
 };
