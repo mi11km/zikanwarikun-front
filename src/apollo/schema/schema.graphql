@@ -1,0 +1,218 @@
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+type Query {
+    user: User!                # tokenからログインユーザー情報収録
+    timetable: Timetable!      # ログインユーザーのデフォルトの時間割取得(クラスと時間とその詳細も全部取得)
+    timetables: [Timetable!]!  # ログインユーザーの時間割の一覧取得
+    todos(input: ID!): [Todo]  # ログインユーザーのデフォルトの時間割のtodo一覧取得(deadlineが近い順) kind別に取得できてもいいかも
+}
+
+type Mutation {
+    signup(input: NewUser!): Auth!
+    updateLoginUser(input: UpdateUser!): Auth!
+    deleteLoginUser(input: DeleteUser!): Boolean!
+    login(input: Login!): Auth!
+    refreshToken: String!  # return token, headerについてるトークンから更新する
+
+    createTimetable(input: NewTimetable!): Timetable!
+    updateTimetable(input: UpdateTimetable!): Timetable!
+    deleteTimetable(input: ID!): Boolean!
+
+    createClass(input: NewClass!): Class!
+    updateClass(input: UpdateClass!): Class!
+    deleteClass(input: ID!): Boolean!
+
+    createClassTime(input: NewClassTime!): ClassTime!
+    updateClassTime(input: UpdateClassTime!): ClassTime!
+
+    createTodo(input: NewTodo!): Todo!
+    updateTodo(input: UpdateTodo!): Todo!
+    deleteTodo(input: ID!): Boolean!
+
+    createUrl(input: NewUrl!): Url!
+    updateUrl(input: UpdateUrl!): Url!
+    deleteUrl(input: ID!): Boolean!
+}
+
+type User {
+    id: ID!
+    email: String!
+    school: String!
+    name: String!
+    timetables: [Timetable]
+}
+
+type Auth {
+    user: User!
+    token: String!
+}
+
+type Timetable {
+    id: ID!
+    name: String!
+    days: Int!           # 平日、平日＋土、毎日
+    periods: Int!        # 時限数
+    createdAt: String!   # datetime型
+    updatedAt: String!
+    isDefault: Boolean!
+    classes: [Class]
+    classtimes: [ClassTime]
+    rowData: [TimetableRowData]
+}
+
+type ClassTime {
+    id: ID!
+    period: Int!        # 時限
+    startTime: String!  # time型 ex) 16:00
+    endTime: String!
+}
+
+type Class {
+    id: ID!
+    name: String!
+    day: Int!         # 曜日
+    period: Int!      # 時限
+    color: String!    # 背景色
+    style: String!    # 授業形態
+    teacher: String!
+    credit: Int       # 単位数
+    memo: String
+    roomOrUrl: String!  # zoomのurlかオンデマンドのurlか教室名
+    todos: [Todo]
+    urls: [Url]
+}
+
+type TimetableRowData {
+    periods: Int!
+    Classes: [Class]
+    startTime: String!
+    endTime: String!
+}
+
+type Todo {
+    id: ID!
+    kind: String!
+    deadline: String!  # "2020-06-01 01:32" という形式で！
+    isDone: Boolean!
+    memo: String
+    isRepeated: Boolean!
+}
+
+type Url {
+    id: ID!
+    name: String!
+    url: String!
+}
+
+input NewUser {
+    email: String!
+    password: String!
+    name: String!
+    school: String!
+}
+
+input UpdateUser {
+    email: String
+    school: String
+    name: String
+    password: updatePassword
+}
+
+input updatePassword {
+    new: String!
+    current: String!
+}
+
+input DeleteUser {
+    password: String!
+}
+
+input Login {
+    email: String!
+    password: String!
+}
+
+input RefreshTokenInput{
+    token: String!
+}
+
+input NewTimetable {
+    name: String!
+    days: Int!
+    periods: Int!
+}
+
+input UpdateTimetable {
+    id: ID!
+    name: String
+    days: Int
+    periods: Int
+    isDefault: Boolean
+}
+
+input NewClassTime {
+    period: Int!
+    startTime: String!
+    endTime: String!
+    timetableId: ID!
+}
+
+input UpdateClassTime {
+    id: ID!
+    startTime: String
+    endTime: String
+}
+
+input NewClass {
+    name: String!
+    day: Int!
+    period: Int!
+    style: String
+    teacher: String
+    roomOrUrl: String
+    timetableId: ID!
+}
+
+input UpdateClass {
+    id: ID!
+    name: String
+    color: String
+    style: String
+    teacher: String
+    credit: Int
+    memo: String
+    roomOrUrl: String
+}
+
+input NewTodo {
+    kind: String!
+    deadline: String!
+    isRepeated: Boolean!
+    classId: ID!
+}
+
+input UpdateTodo {
+    id: ID!
+    kind: String
+    deadline: String
+    isDone: Boolean
+    memo: String
+    isRepeated: Boolean
+}
+
+input NewUrl {
+    name: String!
+    url: String!
+    classId: ID!
+}
+
+input UpdateUrl {
+    id: ID!
+    name: String
+    url: String
+}
+
+
