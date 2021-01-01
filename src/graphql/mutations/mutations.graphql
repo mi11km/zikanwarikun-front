@@ -1,0 +1,107 @@
+# User関連
+mutation signup($input: NewUser!) {
+    signup(input: $input) {
+        user { id email name school timetables { id } } token
+    }
+}
+
+mutation login($input: Login!) {
+    login(input: $input) {
+        user { id email name school timetables { id } } token
+    }
+}
+
+mutation refreshToken {
+    refreshToken
+}
+
+mutation updateLoginUser($input: UpdateUser!) {
+    updateLoginUser(input: $input) {
+        user { id email name school timetables { id } } token
+    }
+}
+
+mutation deleteLoginUser($input: DeleteUser!) {
+    deleteLoginUser(input: $input)
+}
+
+# Timetable関連
+mutation createTimetable($input: NewTimetable!) {
+    createTimetable(input: $input) {
+        id name days periods createdAt updatedAt isDefault
+    }
+}
+
+mutation updateTimetable($input: UpdateTimetable!) {
+    updateTimetable(input: $input) {
+        id name days periods createdAt updatedAt isDefault
+    }
+}
+
+mutation deleteTimetable($timetableId: ID!) {
+    deleteTimetable(input: $timetableId)
+}
+
+# Class_time関連
+mutation createClasstime($input: NewClassTime!) {
+    createClassTime(input: $input) {
+        id period startTime endTime
+    }
+}
+
+mutation updateClassTime($input: UpdateClassTime!) {
+    updateClassTime(input: $input) {
+        id period startTime endTime
+    }
+}
+
+# Class関連
+mutation createClass($input: NewClass!) {
+    createClass(input: $input) {
+        id name day period color style teacher credit memo roomOrUrl
+    }
+}
+
+mutation updateClass($input: UpdateClass!) {
+    updateClass(input: $input) {
+        id name day period color style teacher credit memo roomOrUrl
+    }
+}
+
+mutation deleteClass($classId: ID!) {
+    deleteClass(input: $classId)
+}
+
+# Todo関連
+mutation createTodo($input: NewTodo!) {
+    createTodo(input: $input) {
+        id kind deadline isDone isRepeated memo
+    }
+}
+
+mutation updateTodo($input: UpdateTodo!) {
+    updateTodo(input: $input) {
+        id kind deadline isDone isRepeated memo
+    }
+}
+
+mutation deleteTodo($todoId: ID!) {
+    deleteTodo(input: $todoId)
+}
+
+# Url関連
+mutation createUrl($input: NewUrl!) {
+    createUrl(input: $input){
+        id name url
+    }
+}
+
+mutation updateUrl($input: UpdateUrl!) {
+    updateUrl(input: $input) {
+        id name url
+    }
+}
+
+mutation deleteUrl($urlId: ID!) {
+    deleteUrl(input: $urlId)
+}

@@ -1,0 +1,32 @@
+query getLoginUserData {
+    user {
+        id email name school
+        timetables {
+            id name days periods createdAt updatedAt isDefault
+        }
+    }
+}
+
+query getDefaultTimetable {
+    timetable {
+        id name days periods createdAt updatedAt isDefault
+        rowData {
+            periods startTime endTime
+            Classes {
+                id name day period color style teacher credit memo roomOrUrl
+                todos {
+                    id kind deadline isDone isRepeated memo
+                }
+                urls {
+                    id name url
+                }
+            }
+        }
+    }
+}
+
+query getTodosByGivenTimetableId($timetableId: ID!) {
+    todos(input: $timetableId) {
+        id kind deadline isDone isRepeated memo
+    }
+}
