@@ -3,10 +3,10 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React from 'react';
 
-import { SiteButton } from '../components/partials/Buttons/Buttons';
+import { SiteButton } from '../components/partials/Buttons';
 
-const siteTitle = '時間割くん';
-const urls = {
+export const siteTitle = '時間割くん';
+export const urls = {
     home: '/',
     signup: '/signup',
     login: '/login'
