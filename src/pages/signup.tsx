@@ -3,10 +3,10 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React from 'react';
 
-import { AccountNav, IconAndText } from '../components/partials/Accounts';
+import { AccountNav, IconAndText, StyledForm } from '../components/partials/Accounts';
 import { AccountSubmitButton } from '../components/partials/Buttons';
 import { Copyright } from '../components/partials/Footer';
-import { StyledForm, StyledPaper } from '../components/screens/Signup';
+import { StyledDiv } from '../components/screens/Signup';
 import Loading from '../components/ui/Loading';
 import { useSignupMutation } from '../graphql/__generated__/generated-types-and-hooks';
 import { siteTitle, urls } from './index';
@@ -48,7 +48,7 @@ const Signup: React.FC = () => {
             <Head>
                 <title>{siteTitle} | 新規登録</title>
             </Head>
-            <StyledPaper>
+            <StyledDiv>
                 <IconAndText>新規登録</IconAndText>
                 {error && (
                     <Typography variant="h3" color="error">
@@ -127,7 +127,7 @@ const Signup: React.FC = () => {
                         </AccountNav>
                     </Grid>
                 </StyledForm>
-            </StyledPaper>
+            </StyledDiv>
             <Box mt={5}>
                 <Copyright />
             </Box>

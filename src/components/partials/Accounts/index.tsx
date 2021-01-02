@@ -48,3 +48,8 @@ export const AccountNav: React.FC<AccountAddedNavProps> = ({ children, href }) =
         </Grid>
     );
 };
+
+export const StyledForm = styled('form')((theme) => ({
+    width: '100%',
+    marginTop: theme.theme.spacing(3)
+}));
