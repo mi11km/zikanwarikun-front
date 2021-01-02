@@ -1,4 +1,4 @@
-import { Box, Container, Grid, styled, TextField, Typography } from '@material-ui/core';
+import { Box, Container, Grid, TextField, Typography } from '@material-ui/core';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -6,21 +6,10 @@ import React from 'react';
 import { AccountNav, IconAndText } from '../components/partials/Accounts';
 import { AccountSubmitButton } from '../components/partials/Buttons';
 import { Copyright } from '../components/partials/Footer';
+import { StyledForm, StyledPaper } from '../components/screens/Signup';
 import Loading from '../components/ui/Loading';
 import { useSignupMutation } from '../graphql/__generated__/generated-types-and-hooks';
 import { siteTitle, urls } from './index';
-
-const StyledPaper = styled('div')((theme) => ({
-    marginTop: theme.theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center'
-}));
-
-const StyledForm = styled('form')((theme) => ({
-    width: '100%',
-    marginTop: theme.theme.spacing(3)
-}));
 
 const Signup: React.FC = () => {
     let email: HTMLInputElement,
@@ -63,7 +52,7 @@ const Signup: React.FC = () => {
                 <IconAndText>新規登録</IconAndText>
                 {error && (
                     <Typography variant="h3" color="error">
-                        エラーが発生しました
+                        エラーが発生しました。{error}
                     </Typography>
                 )}
                 <StyledForm noValidate>
