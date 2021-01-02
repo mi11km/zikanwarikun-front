@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React from 'react';
 
-import { SiteButton } from '../components/partials/Buttons';
+import { HomeBackground, SignupForm } from '../components/screens/Home';
 
 export const siteTitle = '時間割くん';
 export const urls = {
@@ -12,8 +12,14 @@ export const urls = {
     login: '/login'
 };
 
-const TextCenter = styled(Typography)({
-    textAlign: 'center'
+const WhiteText = styled(Typography)({
+    color: 'white'
+});
+
+const InnerGrid = styled(Grid)({
+    maxWidth: '960px',
+    margin: '0 auto',
+    height: '60vh'
 });
 
 const Home: React.FC = () => {
@@ -29,20 +35,31 @@ const Home: React.FC = () => {
                 <title>{siteTitle} | zoomが自動で開く時間割アプリ</title>
             </Head>
 
-            <TextCenter variant="h2">{siteTitle}</TextCenter>
-            <TextCenter variant="h5">授業が始まる前にzoomが自動で開く時間割アプリ</TextCenter>
-            <Grid container justify="center" spacing={2}>
-                <Grid item>
-                    <SiteButton variant="contained" onClick={(e) => handleRoute(e, urls.signup)}>
-                        はじめる
-                    </SiteButton>
-                </Grid>
-                <Grid item>
-                    <SiteButton variant="contained" onClick={(e) => handleRoute(e, urls.login)}>
-                        ログインする
-                    </SiteButton>
-                </Grid>
-            </Grid>
+            {/*<Grid container justify="center" spacing={2}>*/}
+            {/*    <Grid item>*/}
+            {/*        <SiteButton variant="outlined" onClick={(e) => handleRoute(e, urls.signup)}>*/}
+            {/*            ユーザー登録*/}
+            {/*        </SiteButton>*/}
+            {/*    </Grid>*/}
+            {/*    <Grid item>*/}
+            {/*        <SiteButton variant="outlined" onClick={(e) => handleRoute(e, urls.login)}>*/}
+            {/*            ログインする*/}
+            {/*        </SiteButton>*/}
+            {/*    </Grid>*/}
+            {/*</Grid>*/}
+            <HomeBackground>
+                <InnerGrid container justify="space-between" alignItems="center">
+                    <Grid item xs={12} sm={8} md={5} style={{ marginLeft: '3%' }}>
+                        <WhiteText variant="h3">{siteTitle}</WhiteText>
+                        <WhiteText variant="h5" style={{ marginTop: '8px' }}>
+                            授業が始まる前にzoomが自動で開く時間割アプリ
+                        </WhiteText>
+                    </Grid>
+                    <Grid item style={{ marginRight: '3%' }}>
+                        <SignupForm />
+                    </Grid>
+                </InnerGrid>
+            </HomeBackground>
         </React.Fragment>
     );
 };
