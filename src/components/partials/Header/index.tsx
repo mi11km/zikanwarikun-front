@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 const Header: React.FC<Props> = (props: Props) => {
     const classes = useStyles();
     const router = useRouter();
-    const { data } = useQuery<IsUserLoggedIn>(IS_LOGGED_IN);
+    const { data } = useQuery(IS_LOGGED_IN);
 
     const handleRoute = (e: React.MouseEvent<HTMLButtonElement>, urlPath: string) => {
         e.preventDefault();
@@ -69,7 +69,7 @@ const Header: React.FC<Props> = (props: Props) => {
                             </a>
                         </Link>
                         <Grid container justify="flex-end" spacing={2}>
-                            {!(data && data.isLoggedIn) && (
+                            {!data.isLoggedIn && (
                                 <>
                                     <Grid item>
                                         <Button
@@ -89,7 +89,7 @@ const Header: React.FC<Props> = (props: Props) => {
                                     </Grid>
                                 </>
                             )}
-                            {data && data.isLoggedIn && (
+                            {data.isLoggedIn && (
                                 <Grid item>
                                     <Logout />
                                 </Grid>
