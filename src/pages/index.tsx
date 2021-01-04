@@ -2,6 +2,7 @@ import { Card, Grid, styled, Typography } from '@material-ui/core';
 import Head from 'next/head';
 import React from 'react';
 
+import Footer from '../components/partials/Footer';
 import Header from '../components/partials/Header';
 import { HomeBackground, SignupForm } from '../components/screens/Home';
 
@@ -24,7 +25,7 @@ const InnerGrid = styled(Grid)({
 
 const NavCard = styled(Card)({
     maxWidth: '960px',
-    margin: '32px auto 0',
+    margin: '64px auto 0',
     height: '480px',
     filter: 'drop-shadow(10px 10px 10px rgba(0,0,0,0.2))'
 });
@@ -54,6 +55,8 @@ const Home: React.FC = () => {
             <NavCard>説明がはいりますー</NavCard>
             <NavCard>説明がはいりますー</NavCard>
             <NavCard>説明がはいりますー</NavCard>
+
+            <Footer />
         </React.Fragment>
     );
 };
