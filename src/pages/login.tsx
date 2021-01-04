@@ -3,6 +3,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React from 'react';
 
+import { isLoggedInVar } from '../apollo/cache';
 import { AccountNav, IconAndText, StyledForm } from '../components/partials/Accounts';
 import { AccountSubmitButton } from '../components/partials/Buttons';
 import { Copyright } from '../components/partials/Footer';
@@ -28,10 +29,9 @@ const Login: React.FC = () => {
                 }
             }
         }).then((r) => {
-            console.log(r.data?.login);
-            if (process.browser) {
-                // sessionStorage.setItem('token', r.data.login.token);
-                // isLoggedInVar(true);
+            if (process.browser && r.data?.login) {
+                sessionStorage.setItem('token', r.data?.login.token);
+                isLoggedInVar(true);
                 router.push(urls.home).then((r) => console.log(`go to ${urls.home}: ${r}`));
             }
         });
