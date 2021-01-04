@@ -3,6 +3,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React from 'react';
 
+import { SiteButton } from '../components/partials/Buttons';
 import { HomeBackground, SignupForm } from '../components/screens/Home';
 
 export const siteTitle = '時間割くん';
@@ -35,25 +36,29 @@ const Home: React.FC = () => {
                 <title>{siteTitle} | zoomが自動で開く時間割アプリ</title>
             </Head>
 
-            {/*<Grid container justify="center" spacing={2}>*/}
-            {/*    <Grid item>*/}
-            {/*        <SiteButton variant="outlined" onClick={(e) => handleRoute(e, urls.signup)}>*/}
-            {/*            ユーザー登録*/}
-            {/*        </SiteButton>*/}
-            {/*    </Grid>*/}
-            {/*    <Grid item>*/}
-            {/*        <SiteButton variant="outlined" onClick={(e) => handleRoute(e, urls.login)}>*/}
-            {/*            ログインする*/}
-            {/*        </SiteButton>*/}
-            {/*    </Grid>*/}
-            {/*</Grid>*/}
             <HomeBackground>
                 <InnerGrid container justify="space-between" alignItems="center">
                     <Grid item xs={12} sm={8} md={5} style={{ marginLeft: '3%' }}>
-                        <WhiteText variant="h3">{siteTitle}</WhiteText>
+                        <WhiteText variant="h2">{siteTitle}</WhiteText>
                         <WhiteText variant="h5" style={{ marginTop: '8px' }}>
                             授業が始まる前にzoomが自動で開く時間割アプリ
                         </WhiteText>
+                        <Grid container justify="center" spacing={2}>
+                            <Grid item>
+                                <SiteButton
+                                    variant="outlined"
+                                    onClick={(e) => handleRoute(e, urls.signup)}>
+                                    ユーザー登録
+                                </SiteButton>
+                            </Grid>
+                            <Grid item>
+                                <SiteButton
+                                    variant="outlined"
+                                    onClick={(e) => handleRoute(e, urls.login)}>
+                                    ログインする
+                                </SiteButton>
+                            </Grid>
+                        </Grid>
                     </Grid>
                     <Grid item style={{ marginRight: '3%' }}>
                         <SignupForm />

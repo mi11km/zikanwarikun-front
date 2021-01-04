@@ -83,21 +83,20 @@ export const SignupForm: React.FC = () => {
 
 /**/
 
-const Background = styled('div')((theme) => ({
-    backgroundColor: theme.theme.palette.warning.light,
-    height: '50vh'
-}));
-
 export const HomeBackground: React.FC = ({ children }) => {
     return (
         <React.Fragment>
-            <Background>{children}</Background>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-                <path
-                    fill="#FFB74D"
-                    fillOpacity="1"
-                    d="M0,192L26.7,197.3C53.3,203,107,213,160,218.7C213.3,224,267,224,320,192C373.3,160,427,96,480,101.3C533.3,107,587,181,640,192C693.3,203,747,149,800,133.3C853.3,117,907,139,960,165.3C1013.3,192,1067,224,1120,213.3C1173.3,203,1227,149,1280,122.7C1333.3,96,1387,96,1413,96L1440,96L1440,0L1413.3,0C1386.7,0,1333,0,1280,0C1226.7,0,1173,0,1120,0C1066.7,0,1013,0,960,0C906.7,0,853,0,800,0C746.7,0,693,0,640,0C586.7,0,533,0,480,0C426.7,0,373,0,320,0C266.7,0,213,0,160,0C106.7,0,53,0,27,0L0,0Z"></path>
-            </svg>
+            <div>{children}</div>
+            <style jsx>{`
+                div {
+                    background: #ffe259;
+                    background: -webkit-linear-gradient(to right, #ffa751, #ffe259);
+                    background: linear-gradient(to right, #ffa751, #ffe259);
+                    height: 70vh;
+                    border-bottom-right-radius: 2000px 300px;
+                    border-bottom-left-radius: 2000px 300px;
+                }
+            `}</style>
         </React.Fragment>
     );
 };
