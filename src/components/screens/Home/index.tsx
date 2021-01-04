@@ -1,8 +1,13 @@
-import { Grid, styled, TextField } from '@material-ui/core';
+import { Grid, styled, TextField, Typography } from '@material-ui/core';
+import { useRouter } from 'next/router';
 import React from 'react';
 
+import { isLoggedInVar } from '../../../apollo/cache';
+import { useSignupMutation } from '../../../graphql/__generated__/generated-types-and-hooks';
+import { urls } from '../../../pages';
 import { StyledForm } from '../../partials/Accounts';
 import { AccountSubmitButton } from '../../partials/Buttons';
+import Loading from '../../ui/Loading';
 
 const StyledTextField = styled(TextField)({
     backgroundColor: 'white',
@@ -10,8 +15,43 @@ const StyledTextField = styled(TextField)({
 });
 
 export const SignupForm: React.FC = () => {
+    let email: HTMLInputElement,
+        password: HTMLInputElement,
+        school: HTMLInputElement,
+        name: HTMLInputElement;
+    const router = useRouter();
+    const [signupMutation, { error, loading }] = useSignupMutation();
+
+    const handleSignup = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        if (email.value === '' || password.value === '') return;
+        signupMutation({
+            variables: {
+                input: {
+                    email: email.value,
+                    password: password.value,
+                    name: name.value,
+                    school: school.value
+                }
+            }
+        }).then((r) => {
+            if (process.browser && r.data?.signup) {
+                sessionStorage.setItem('token', r.data?.signup.token);
+                isLoggedInVar(true);
+                router.push(urls.home).then((r) => console.log(`go to ${urls.home}: ${r}`));
+            }
+        });
+    };
+
+    if (loading) return <Loading />;
+
     return (
         <StyledForm noValidate style={{ maxWidth: '320px' }}>
+            {error && (
+                <Typography variant="h3" color="error">
+                    エラーが発生しました。{error}
+                </Typography>
+            )}
             <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <StyledTextField
@@ -22,9 +62,9 @@ export const SignupForm: React.FC = () => {
                         label="メールアドレス"
                         type="email"
                         autoComplete="email"
-                        // inputRef={(node: HTMLInputElement) => {
-                        //     email = node;
-                        // }}
+                        inputRef={(node: HTMLInputElement) => {
+                            email = node;
+                        }}
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -36,9 +76,9 @@ export const SignupForm: React.FC = () => {
                         label="パスワード"
                         type="password"
                         autoComplete="current-password"
-                        // inputRef={(node: HTMLInputElement) => {
-                        //     password = node;
-                        // }}
+                        inputRef={(node: HTMLInputElement) => {
+                            password = node;
+                        }}
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -49,9 +89,9 @@ export const SignupForm: React.FC = () => {
                         name="school"
                         label="学校名"
                         type="text"
-                        // inputRef={(node: HTMLInputElement) => {
-                        //     school = node;
-                        // }}
+                        inputRef={(node: HTMLInputElement) => {
+                            school = node;
+                        }}
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -62,19 +102,14 @@ export const SignupForm: React.FC = () => {
                         name="name"
                         label="ニックネーム"
                         type="text"
-                        // inputRef={(node: HTMLInputElement) => {
-                        //     name = node;
-                        // }}
+                        inputRef={(node: HTMLInputElement) => {
+                            name = node;
+                        }}
                     />
                 </Grid>
             </Grid>
 
-            <AccountSubmitButton
-                type="submit"
-                fullWidth
-                variant="outlined"
-                // onClick={handleSignup}
-            >
+            <AccountSubmitButton type="submit" fullWidth variant="outlined" onClick={handleSignup}>
                 登録する
             </AccountSubmitButton>
         </StyledForm>
