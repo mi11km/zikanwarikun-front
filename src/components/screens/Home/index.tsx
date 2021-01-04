@@ -95,6 +95,7 @@ export const HomeBackground: React.FC = ({ children }) => {
                     height: 70vh;
                     border-bottom-right-radius: 2000px 300px;
                     border-bottom-left-radius: 2000px 300px;
+                    filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.2));
                 }
             `}</style>
         </React.Fragment>
